@@ -1,1 +1,108 @@
-<h1>Control Center</h1>
+<%- include('components/head') %>
+    <%- include('components/navbar') %>
+        <%- messages('components/messages', locals) %>
+
+            <style>
+                .content-wrap {
+                    width: 60%;
+                    position: relative;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: #ffffff;
+                    overflow: hidden;
+                }
+
+                .progress-subtitles {
+                    width: 71%;
+                    position: relative;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: #ffffff;
+                    overflow: hidden;
+                }
+
+                .subtitle {
+                    width: 20%;
+                }
+
+                .complete {
+                    color: #335c26;
+                }
+
+                .incomplete {
+                    color: #989898;
+                }
+
+                .content-wrap::before {
+                    position: absolute;
+                    top: calc(50% - 1px);
+                    right: 0;
+                    left: 0;
+                    Content: "";
+                    Background-color: #adadad;
+                    height: 2px;
+                }
+
+                .icon1 {
+                    position: relative;
+                    z-index: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 2rem;
+                    background: #ffffff;
+                    box-shadow: 0 0 0 0.5em #ffffff;
+                }
+            </style>
+
+            <body style="height: 100%;">
+                <div id="mainContainer" class="container m-auto mt-5">
+                    <div class="row flex-lg-row-reverse">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-4 pe-4 d-flex justify-content-center" style="pointer-events: none">
+                            <img id="aevsLogo" src="/images/logo-tri.png" width="400px"
+                                alt="AEVS logo: a happy AEV surfing a rainbow">
+                        </div>
+                        <div class="col-lg-6 m-auto">
+                            <div class="row">
+                                <div class="col d-flex justify-content-center">
+                                    <h1 class="ms-2">Autonomous delivery.<br>Anywhere on campus.</h1>
+                                </div>
+                            </div>
+                            <div id="googleButtonRow" class="row m-auto" style="width: 60%">
+                                <a href="/user/login" type="button" class="btn btn-light mt-3 shadow" id="googleButton">
+                                    <div class="row">
+                                        <div class="col-1" id="googleIconCol">
+                                            <img id="googleIcon" src="/images/logo-google.png" alt="Google logo"
+                                                width="35px" class="my-auto">
+                                        </div>
+                                        <div class="col m-auto pe-4 me-2">Sign in with Google</div>
+                                    </div>
+                                </a>
+                                <p class="small m-auto mt-3 text-center" style="color: #e5e5e5;">Valid UH email required
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-1"></div>
+                    </div>
+                </div>
+                <div class="fixed-bottom small navbar navbar-expand d-flex align-items-center">
+                    <div class="container">
+                        <div>
+                            <img src="/images/logo_uhm_smol.png" class="rounded-circle" width="40px"
+                                alt="Profile Picture">
+                            <span class="ms-2">University of Hawaiʻi at Mānoa</span>
+                        </div>
+                        <div id="icons">
+                            <a href="#"><i class="bi bi-info-circle-fill mx-1"></i></a>
+                            <a href="#"><i class="bi bi-envelope-fill mx-1"></i></a>
+                            <a href="https://giving.uhfoundation.org/funds/13025304" target="_blank"><i
+                                    class="bi bi-coin mx-1"></i></a>
+                            <a href="https://github.com/ME-481-AEVS" target="_blank"><i
+                                    class="bi bi-github ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </body>
