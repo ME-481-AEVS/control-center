@@ -1,0 +1,26 @@
+{
+  "name": "control-center",
+  "version": "1.0.0",
+  "description": "AEVS control center",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app",
+    "lint": "eslint --ext .js .",
+    "lint-fix": "eslint --fix --ext .js ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ME-481-AEVS/control-center.git"
+  },
+  "author": "AEVS UHM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ME-481-AEVS/control-center/issues"
+  },
+  "homepage": "https://github.com/ME-481-AEVS/control-center#readme",
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
