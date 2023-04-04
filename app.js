@@ -14,7 +14,5 @@ app.get('/manual_control', (req, res) => {
   res.render('manual_control');
 });
 
-console.log('hello control center');
-
 // start server
 app.listen(port, () => console.log(`Server started on port ${port}.`));
