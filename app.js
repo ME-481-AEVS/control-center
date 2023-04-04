@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/manual_control', (req, res) => {
+  res.render('manual_control');
+});
+
 console.log('hello control center');
 
 // start server
