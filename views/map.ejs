@@ -21,9 +21,52 @@
 </body>
 <script>
   const key = '<%= mapKey.mapApiKey %>';
-  var map = L.map('map').setView([21.299, -157.817], 17);
+  const locationIcon = L.Icon.extend({
+    options: {
+      iconSize:     [30, 30],
+      popupAnchor:  [0, -14]
+    }
+  });
+
+  const map = L.map('map').setView([21.299, -157.816], 17);
   L.tileLayer(`https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${key}`, {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
+
+  const aev1 = new locationIcon({iconUrl: 'location_icon.ico'});
+
+  const innerUL = [21.301819, -157.820419];
+  const innerUR = [21.301436, -157.814623];
+  const innerLR = [21.296271, -157.815239];
+  const innerLL = [21.296793, -157.821193];
+
+  const outerUL = [21.3071, -157.8296];
+  const outerUR = [21.3071, -157.8037];
+  const outerLL = [21.2916, -157.8296];
+  const outerLR = [21.2916, -157.8037];
+
+  const bottomBorder = L.polygon(
+      [outerLL, innerLL, [21.296665, -157.817077], innerLR, outerLR],
+      { stroke: false, color: 'black', fillOpacity: 0.3 }
+  ).addTo(map);
+
+  const rightBorder = L.polygon(
+      [outerLR, innerLR, [21.297156, -157.815048], [21.297978, -157.814993],
+        [21.298873, -157.814532], innerUR, outerUR],
+      { stroke: false, color: 'black', fillOpacity: 0.3 }
+  ).addTo(map);
+
+  const topBorder = L.polygon(
+      [outerUR, innerUR, [21.301310, -157.818061], [21.300940, -157.819212],
+        [21.300959, -157.819526], [21.301103, -157.819736], innerUL, outerUL],
+      { stroke: false, color: 'black', fillOpacity: 0.3 }
+  ).addTo(map);
+
+  const leftBorder = L.polygon(
+      [outerUL, innerUL, [21.301177, -157.820927], [21.300570, -157.821165], innerLL, outerLL],
+      { stroke: false, color: 'black', fillOpacity: 0.3 }
+  ).addTo(map);
+
+  L.marker([21.299, -157.817], {icon: aev1}).addTo(map).bindPopup("AEV 1 - Idle");
 </script>
