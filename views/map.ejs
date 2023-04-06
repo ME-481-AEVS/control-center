@@ -1,4 +1,29 @@
 <%- include('components/head') %>
 <%- include('components/navbar') %>
 
-<h1>Map</h1>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <style>
+      #map {
+        height: 100%;
+      }
+    </style>
+</head>
+<body>
+    <div style="height: 92vh; background-color: grey">
+        <div id="map"></div>
+    </div>
+</body>
+<script>
+  const key = '<%= mapKey.mapApiKey %>';
+  var map = L.map('map').setView([21.299, -157.817], 17);
+  L.tileLayer(`https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=${key}`, {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+</script>

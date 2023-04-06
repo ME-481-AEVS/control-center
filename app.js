@@ -1,4 +1,5 @@
 const express = require('express');
+const mapKey = require('./config/apikey');
 
 const port = process.env.PORT || 3000;
 
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/map', (req, res) => {
-  res.render('map');
+  res.render('map', { mapKey });
 });
 
 app.get('/aev', (req, res) => {
