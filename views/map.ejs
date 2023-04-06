@@ -14,9 +14,9 @@
       }
       #overlay {
         position: absolute;
-        z-index: 1000;
+        z-index: 500;
         width: 350px;
-        height: 450px;
+        height: 320px;
         top: 10%;
         right: 5%;
         border-radius: 10px;
@@ -41,7 +41,7 @@
 <body>
     <div style="height: calc(100vh - 56px); position: relative;">
         <div id="overlay" class="p-4">
-            <div class="row mt-2 align-items-center no-gutter">
+            <div class="row align-items-center no-gutter" type="button" onclick="popup(1)">
                 <div class="col-6">
                     <img src="location_icon.ico" width="30px"/>
                     <span class="ms-2" style="font-weight: 500;">AEV 1&nbsp;&nbsp;-&nbsp;&nbsp;Idle</span>
@@ -139,7 +139,7 @@
                                 <i class="bi bi-battery-charging" style="color: green;"></i>
                             </div>
                             <div class="row no-gutter">
-                                <span class="status-text">100%</span>
+                                <span class="status-text">63%</span>
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
             </div>
             <hr>
             <div class="row mt-2 align-items-center no-gutter">
-                <div class="col-6">
+                <div class="col-7">
                     <img src="location_icon.ico" width="30px"/>
                     <span class="ms-2" style="font-weight: 500;">AEV 4&nbsp;&nbsp;-&nbsp;&nbsp;Off</span>
                 </div>
@@ -203,7 +203,7 @@
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-  const aev1 = new locationIcon({iconUrl: 'location_icon.ico'});
+  const aevOneLogo = new locationIcon({iconUrl: 'location_icon.ico'});
 
   const outerUL = [21.32, -157.85];
   const outerUR = [21.32, -157.78];
@@ -237,5 +237,15 @@
       { stroke: false, color: 'black', fillOpacity: 0.3 }
   ).addTo(map);
 
-  L.marker([21.299, -157.817], {icon: aev1}).addTo(map).bindPopup("AEV 1 - Idle");
+  const aevOne = L.marker([21.299, -157.817], {icon: aevOneLogo}).addTo(map).bindPopup("AEV 1 - Idle");
+
+  function popup(aev) {
+    switch (aev) {
+      case 1:
+        aevOne.openPopup();
+        break;
+      default:
+        break;
+    }
+  }
 </script>
