@@ -15,7 +15,15 @@ app.set('view engine', 'ejs'); // set view engine to ejs
 
 // home route
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('list');
+});
+
+app.get('/map', (req, res) => {
+  res.render('map');
+});
+
+app.get('/aev', (req, res) => {
+  res.render('aev');
 });
 
 app.get('/manual_control', (req, res) => {
