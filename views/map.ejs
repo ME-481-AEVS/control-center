@@ -15,7 +15,7 @@
       #overlay {
         position: absolute;
         z-index: 500;
-        width: 360px;
+        width: 380px;
         height: 320px;
         top: 10%;
         right: 5%;
@@ -42,9 +42,9 @@
     <div style="height: calc(100vh - 56px); position: relative;">
         <div id="overlay" class="p-4">
             <div class="row align-items-center no-gutter" type="button" onclick="popup(1)">
-                <div class="col-7">
-                    <img src="location_icon.ico" width="30px"/>
-                    <span class="ms-2" style="font-weight: 500;">AEV 1&nbsp;&nbsp;-&nbsp;&nbsp;Idle</span>
+                <div class="col-7 mt-1">
+                    <img src="/pins/pin_aev1.png" width="25px"/>
+                    <span class="ms-2" style="font-weight: 500;">AEV 1&nbsp;&nbsp;-&nbsp;&nbsp;Moving</span>
                 </div>
                 <div class="col d-flex justify-content-end align-items-center">
                     <div class="row no-gutter">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-battery-full" style="color: green;"></i>
+                                <i class="bi bi-battery-full"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">92%</span>
@@ -76,16 +76,16 @@
                 </div>
             </div>
             <hr>
-            <div class="row mt-2 align-items-center no-gutter">
-                <div class="col-7">
-                    <img src="location_icon.ico" width="30px"/>
-                    <span class="ms-2" style="font-weight: 500;">AEV 2&nbsp;&nbsp;-&nbsp;&nbsp;Off</span>
+            <div class="row mt-2 align-items-center no-gutter" type="button" onclick="popup(2)">
+                <div class="col-7 mt-1">
+                    <img src="/pins/pin_aev2.png" width="25px"/>
+                    <span class="ms-2" style="font-weight: 500;">AEV 2&nbsp;&nbsp;-&nbsp;&nbsp;Idle</span>
                 </div>
                 <div class="col d-flex justify-content-end align-items-center">
                     <div class="row no-gutter">
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-wifi-off"></i>
+                                <i class="bi bi-wifi-2"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">WiFi</span>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-reception-0"></i>
+                                <i class="bi bi-reception-2"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">GPS</span>
@@ -104,23 +104,23 @@
                                 <i class="bi bi-battery-charging" style="color: green;"></i>
                             </div>
                             <div class="row no-gutter">
-                                <span class="status-text">100%</span>
+                                <span class="status-text">78%</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="row mt-2 align-items-center no-gutter">
-                <div class="col-7">
-                    <img src="location_icon.ico" width="30px"/>
-                    <span class="ms-2" style="font-weight: 500;">AEV 3&nbsp;&nbsp;-&nbsp;&nbsp;Off</span>
+            <div class="row mt-2 align-items-center no-gutter" type="button" onclick="popup(3)">
+                <div class="col-7 mt-1">
+                    <img src="/pins/pin_aev3.png" width="25px"/>
+                    <span class="ms-2" style="font-weight: 500;">AEV 3&nbsp;&nbsp;-&nbsp;&nbsp;Waiting</span>
                 </div>
                 <div class="col d-flex justify-content-end align-items-center">
                     <div class="row no-gutter">
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-wifi-off"></i>
+                                <i class="bi bi-wifi-2"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">WiFi</span>
@@ -128,7 +128,7 @@
                         </div>
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-reception-0"></i>
+                                <i class="bi bi-reception-4"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">GPS</span>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="col text-center px-2">
                             <div class="row no-gutter">
-                                <i class="bi bi-battery-charging" style="color: green;"></i>
+                                <i class="bi bi-battery-half"></i>
                             </div>
                             <div class="row no-gutter">
                                 <span class="status-text">63%</span>
@@ -146,9 +146,9 @@
                 </div>
             </div>
             <hr>
-            <div class="row mt-2 align-items-center no-gutter">
-                <div class="col-7">
-                    <img src="location_icon.ico" width="30px"/>
+            <div class="row mt-2 align-items-center no-gutter" style="color: grey;"  type="button" onclick="popup(4)">
+                <div class="col-7 mt-1">
+                    <img src="/pins/pin_off.png" width="25px"/>
                     <span class="ms-2" style="font-weight: 500;">AEV 4&nbsp;&nbsp;-&nbsp;&nbsp;Off</span>
                 </div>
                 <div class="col d-flex justify-content-end align-items-center">
@@ -187,9 +187,9 @@
 
 <script>
   const key = '<%= mapKey.mapApiKey %>';
-  const locationIcon = L.Icon.extend({
+  const LocationIcon = L.Icon.extend({
     options: {
-      iconSize:     [30, 30],
+      iconSize:     [25, 25],
       popupAnchor:  [0, -14]
     }
   });
@@ -203,7 +203,10 @@
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-  const aevOneLogo = new locationIcon({iconUrl: 'location_icon.ico'});
+  const aevOnePin = new LocationIcon({iconUrl: '/pins/pin_aev1.png'});
+  const aevTwoPin = new LocationIcon({iconUrl: '/pins/pin_aev2.png'});
+  const aevThreePin = new LocationIcon({iconUrl: '/pins/pin_aev3.png'});
+  const aevFourPin = new LocationIcon({iconUrl: '/pins/pin_off.png'});
 
   const outerUL = [21.32, -157.85];
   const outerUR = [21.32, -157.78];
@@ -215,34 +218,61 @@
   const innerLR = [21.296271, -157.815239];
   const innerLL = [21.296793, -157.821193];
 
-  const bottomBorder = L.polygon(
+  // bottom border
+  L.polygon(
       [outerLL, innerLL, [21.296665, -157.817077], innerLR, outerLR],
       { stroke: false, color: 'black', fillOpacity: 0.3 }
   ).addTo(map);
 
-  const rightBorder = L.polygon(
+  // right border
+  L.polygon(
       [outerLR, innerLR, [21.297156, -157.815048], [21.297978, -157.814993],
         [21.298873, -157.814532], innerUR, outerUR],
       { stroke: false, color: 'black', fillOpacity: 0.3 }
   ).addTo(map);
 
-  const topBorder = L.polygon(
+  // top border
+  L.polygon(
       [outerUR, innerUR, [21.301310, -157.818061], [21.300940, -157.819212],
         [21.300959, -157.819526], [21.301103, -157.819736], innerUL, outerUL],
       { stroke: false, color: 'black', fillOpacity: 0.3 }
   ).addTo(map);
 
-  const leftBorder = L.polygon(
+  // left border
+  L.polygon(
       [outerUL, innerUL, [21.301177, -157.820927], [21.300570, -157.821165], innerLL, outerLL],
       { stroke: false, color: 'black', fillOpacity: 0.3 }
   ).addTo(map);
 
-  const aevOne = L.marker([21.299, -157.817], {icon: aevOneLogo}).addTo(map).bindPopup("AEV 1 - Idle");
+  const aevOne = L.marker([21.3, -157.8175], {icon: aevOnePin}).addTo(map).bindPopup(
+      "<b>AEV 1</b><br>Moving to drop-off @ Campus Center<br>ETA: 2:33 PM<br>" +
+      "<a href=\"/aev\">View in Console</a>"
+  );
+  const aevTwo = L.marker([21.3, -157.816], {icon: aevTwoPin}).addTo(map).bindPopup(
+      "<b>AEV 2</b><br>Idle, Charging<br>" +
+      "<a href=\"/aev\">View in Console</a>"
+  );
+  const aevThree = L.marker([21.298, -157.8178], {icon: aevThreePin}).addTo(map).bindPopup(
+      "<b>AEV 3</b><br>Waiting at Pickup<br>" +
+      "<a href=\"/aev\">View in Console</a>"
+  );
+  const aevFour = L.marker([21.2975, -157.8165], {icon: aevFourPin}).addTo(map).bindPopup(
+      "<b>AEV 4</b><br>Off, Charging<br>"
+  );
 
   function popup(aev) {
     switch (aev) {
       case 1:
         aevOne.openPopup();
+        break;
+      case 2:
+        aevTwo.openPopup();
+        break;
+      case 3:
+        aevThree.openPopup();
+        break;
+      case 4:
+        aevFour.openPopup();
         break;
       default:
         break;
