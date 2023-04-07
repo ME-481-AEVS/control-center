@@ -1,0 +1,12 @@
+.status-text {
+  font-size: 10px;
+  color: grey;
+  padding: 0;
+  margin-top: -5px;
+}
+.no-gutter {
+  --bs-gutter-x: 0;
+}
+.disabled-grey {
+  color: grey;
+}

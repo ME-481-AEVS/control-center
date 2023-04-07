@@ -2,9 +2,166 @@
 <%- include('components/navbar') %>
 
 <body>
-    <h1>List</h1>
-
-    List with all robots and status... mock-up:
-
-    <img src="list_ref.png" width="100%" />
+<div class="container">
+    <table class="table table-striped text-center mt-4">
+        <thead class="thead-dark">
+        <tr class="text-center">
+            <th scope="col">AEV</th>
+            <th scope="col">Status</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Placed By</th>
+            <th scope="col">Delivering To</th>
+            <th scope="col">Signal / Battery</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- later - init these with loop from aev obj passed with request -->
+            <tr style="vertical-align: middle;">
+                <td>1</td>
+                <td>Enroute</td>
+                <td>Hamilton</td>
+                <td>Campus Center</td>
+                <td>J. Schmoe</td>
+                <td>S. Jones</td>
+                <td class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-wifi-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">WiFi</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-reception-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">GPS</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-battery-charging" style="color: green;"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">78%</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: middle;">
+                <td>2</td>
+                <td>Enroute</td>
+                <td>Hamilton</td>
+                <td>Campus Center</td>
+                <td>J. Schmoe</td>
+                <td>S. Jones</td>
+                <td class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-wifi-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">WiFi</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-reception-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">GPS</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-battery-charging" style="color: green;"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">78%</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: middle;">
+                <td>3</td>
+                <td>Waiting at Pickup</td>
+                <td>POST</td>
+                <td>Kuykendall</td>
+                <td>J. Smith</td>
+                <td>A. Buttersworth</td>
+                <td class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-wifi-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">WiFi</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-reception-2"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">GPS</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-battery-charging" style="color: green;"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">78%</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: middle;">
+                <td>4</td>
+                <td>Off</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-wifi-off"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">WiFi</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-reception-0"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">GPS</span>
+                            </div>
+                        </div>
+                        <div class="col text-center px-2">
+                            <div class="row no-gutter">
+                                <i class="bi bi-battery-charging" style="color: green;"></i>
+                            </div>
+                            <div class="row no-gutter">
+                                <span class="status-text">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </body>
