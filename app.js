@@ -20,14 +20,17 @@ app.get('/', (req, res) => {
   res.render('list');
 });
 
+// map route
 app.get('/map', (req, res) => {
   res.render('map', { mapKey });
 });
 
+// aev cameras/info route
 app.get('/aev', (req, res) => {
   res.render('aev');
 });
 
+// manual control route
 app.get('/manual_control', (req, res) => {
   res.render('manual_control');
 });
