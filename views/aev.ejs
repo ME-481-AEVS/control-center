@@ -6,6 +6,11 @@
       body {
         background-color: #111111;
       }
+      @keyframes blinker {
+        50% {
+          opacity: 75%;
+        }
+      }
       #status-box {
         padding-top: 8px;
         padding-bottom: 8px;
@@ -111,13 +116,15 @@
                     <div class="col-2">
                         <div id="statusCircle" class="dot ms-3 mt-1"></div>
                     </div>
-                    <div class="col me-5">
-                        <b id="statusText">Enroute</b>
+                    <div class="col">
+                        <b id="statusText">Ready</b>
+                    </div>
+                    <div class="col-2">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row info-box">
+        <div id="currentDeliveryBox" class="row info-box">
             <b>Current Delivery</b>
             <div class="row">
                 <div class="col">
@@ -153,6 +160,51 @@
                     <div class="row">
                         <b>53%</b>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="manualControlBox" class="row info-box" style="display: none;">
+            <b>Manual Controls</b>
+            <div class="row mt-2 px-2">
+                <div class="col">
+                    <div class="row small">
+                        <span>Forward</span>
+                    </div>
+                    <div class="row">
+                        <b>W</b>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row small">
+                        <span>Left</span>
+                    </div>
+                    <div class="row">
+                        <b>A</b>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row small">
+                        <span>Backward</span>
+                    </div>
+                    <div class="row">
+                        <b>S</b>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row small">
+                        <span>Right</span>
+                    </div>
+                    <div class="row">
+                        <b>D</b>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <button type="button" class="btn btn-dark" style="width: 100%;"><b>Open Door</b></button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-dark" style="width: 100%;"><b>Close Door</b></button>
                 </div>
             </div>
         </div>
@@ -251,14 +303,14 @@
         </div>
         <div>
             <div class="row">
-                <button class="btn btn-warning justify-content-center" type="button">
-                    <span class="mt-2" onclick="manualControl()" style="font-weight: 700; font-size: 1.4rem;">MANUAL CONTROL</span>
+                <button id="manualControlButton" type="button" onclick="manualControl()" class="btn btn-warning justify-content-center" style="font-weight: 700; font-size: 1.4rem;">
+                    MANUAL CONTROL
                 </button>
             </div>
             <div class="row">
-                <a href="#" class="btn btn-danger justify-content-center" type="button">
-                    <span class="mt-2" style="font-weight: 600; font-size: 1.4rem;">EMERGENCY STOP</span>
-                </a>
+                <button href="#" class="btn btn-danger justify-content-center" type="button" style="font-weight: 600; font-size: 1.4rem;">
+                    EMERGENCY STOP
+                </button>
             </div>
         </div>
     </div>
@@ -266,11 +318,29 @@
         let manualControlsOn = false;
         function manualControl() {
           manualControlsOn = !manualControlsOn;
-          console.log(manualControlsOn);
+
+          const statusText = document.getElementById('statusText');
+          const statusIcon = document.getElementById('statusCircle');
+          const manualControlButton = document.getElementById('manualControlButton');
+          const deliveryBox = document.getElementById('currentDeliveryBox');
+          const manualBox = document.getElementById('manualControlBox');
+
           if (manualControlsOn) {
-            document.getElementById('statusText').innerText = 'MANUAL CONTROL'
+            statusText.innerText = 'MANUAL CONTROLS ON';
+            statusText.style.color = '#ffc107';
+            statusText.style.animation = 'blinker 2s linear infinite';
+            statusIcon.style.visibility = 'hidden';
+            manualControlButton.innerText = 'RELEASE CONTROL';
+            deliveryBox.style.display = 'none';
+            manualBox.style.display = '';
           } else {
-            document.getElementById('statusText').innerText = 'Enroute'
+            statusText.innerText = 'Ready';
+            statusText.style.color = '#0f9d3c';
+            statusText.style.animation = '';
+            statusIcon.style.visibility = 'visible';
+            manualControlButton.innerText = 'MANUAL CONTROL';
+            deliveryBox.style.display = '';
+            manualBox.style.display = 'none';
           }
         }
     </script>
