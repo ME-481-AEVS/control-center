@@ -1,15 +1,16 @@
-let manualControlsOn = false;
+let status = 0; // 0 = normal, 1 = manual control, -1 = emergency stop
 let doorOpen = false; // todo get this from robot
 
 /* Data encoded as a number, each bit represents a command:
       0000 0000
-        CO WASD
-    C: close door
-    O: open door
-    W: forward
-    A: left
-    S: backward
-    D: right
+       ECO WASD
+    E: emergency stop   64
+    C: close door       32
+    O: open door        16
+    W: forward           8
+    A: left              4
+    S: backward          2
+    D: right             1
  */
 let dataState = 0;
 let oldDataState = 0;
@@ -19,9 +20,11 @@ let aPress = false;
 let sPress = false;
 let dPress = false;
 
+const manualControlButton = document.getElementById('manualControlButton');
+const emergencyStopButton = document.getElementById('emergencyStopButton');
+
 const statusText = document.getElementById('statusText');
 const statusIcon = document.getElementById('statusCircle');
-const manualControlButton = document.getElementById('manualControlButton');
 const deliveryBox = document.getElementById('currentDeliveryBox');
 const manualBox = document.getElementById('manualControlBox');
 
@@ -30,8 +33,55 @@ const leftControl = document.getElementById('leftControl');
 const backControl = document.getElementById('backControl');
 const rightControl = document.getElementById('rightControl');
 
+function updatePage() {
+  switch (status) {
+    case -1: // emergency stop
+      emergencyStopButton.innerText = 'RESUME OPERATION';
+      statusText.style.color = '#ce0d0d';
+      statusText.innerText = 'EMERGENCY STOP';
+      statusIcon.style.visibility = 'hidden';
+      manualControlButton.disabled = true;
+      break;
+    case 1: // manual control
+      statusText.innerText = 'MANUAL CONTROL ON';
+      statusText.style.color = '#ffc107';
+      statusText.style.animation = 'blinker 2s linear infinite';
+      statusIcon.style.visibility = 'hidden';
+      manualControlButton.innerText = 'RELEASE CONTROL';
+      deliveryBox.style.display = 'none';
+      manualBox.style.display = '';
+      break;
+    default: // normal mode
+      statusText.innerText = 'Ready';
+      statusText.style.color = '#0f9d3c';
+      statusText.style.animation = '';
+      statusIcon.style.visibility = 'visible';
+      manualControlButton.innerText = 'MANUAL CONTROL';
+      deliveryBox.style.display = '';
+      manualBox.style.display = 'none';
+      emergencyStopButton.innerText = 'EMERGENCY STOP';
+      manualControlButton.disabled = false;
+  }
+}
+
+function toggleEmergencyStop() {
+  if (status !== -1) {
+    // TODO send the command (64)
+    status = -1;
+    dataState += 64;
+    console.log('Emergency stop engaged');
+    updatePage();
+  } else {
+    // TODO send the command (0)
+    status = 0;
+    dataState -= 64;
+    console.log('Emergency stop disengaged');
+    updatePage();
+  }
+}
+
 function openDoor() {
-  if (manualControlsOn) {
+  if (status === 1) {
     if (dataState === 0) {
       // TODO send the command (32)
       console.log('Opening door');
@@ -39,11 +89,13 @@ function openDoor() {
     } else {
       alert('AEV must be stopped before operating door.');
     }
+  } else {
+    alert('Cannot operate door while emergency stop engaged');
   }
 }
 
 function closeDoor() {
-  if (manualControlsOn) {
+  if (status === 1) {
     if (dataState === 0) {
       // TODO send the command (16)
       console.log('Closing door');
@@ -51,11 +103,13 @@ function closeDoor() {
     } else {
       alert('AEV must be stopped before operating door.');
     }
+  } else {
+    alert('Cannot operate door while emergency stop engaged');
   }
 }
 
 function keyDown(event) {
-  if (doorOpen) {
+  if (doorOpen || status < 1) {
     return;
   }
   switch (event.key) {
@@ -97,7 +151,7 @@ function keyDown(event) {
 }
 
 function keyUp(event) {
-  if (doorOpen) {
+  if (doorOpen || status < 1) {
     return;
   }
   switch (event.key) {
@@ -139,29 +193,20 @@ function keyUp(event) {
 }
 
 function manualControl() {
-  manualControlsOn = !manualControlsOn;
-
-  if (manualControlsOn) {
-    statusText.innerText = 'MANUAL CONTROLS ON';
-    statusText.style.color = '#ffc107';
-    statusText.style.animation = 'blinker 2s linear infinite';
-    statusIcon.style.visibility = 'hidden';
-    manualControlButton.innerText = 'RELEASE CONTROL';
-    deliveryBox.style.display = 'none';
-    manualBox.style.display = '';
-
-    document.addEventListener('keydown', keyDown);
-    document.addEventListener('keyup', keyUp);
-  } else {
-    statusText.innerText = 'Ready';
-    statusText.style.color = '#0f9d3c';
-    statusText.style.animation = '';
-    statusIcon.style.visibility = 'visible';
-    manualControlButton.innerText = 'MANUAL CONTROL';
-    deliveryBox.style.display = '';
-    manualBox.style.display = 'none';
-
+  if (status === -1) {
+    // we're in emergency stop
+    return;
+  }
+  if (status === 1) {
+    // we're in manual control, switch back to normal
+    status = 0;
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
+    updatePage();
+    return;
   }
+  status = 1;
+  document.addEventListener('keydown', keyDown);
+  document.addEventListener('keyup', keyUp);
+  updatePage();
 }
