@@ -8,6 +8,7 @@ const app = express(); // init app
 app.use('/scripts/bootstrap', express.static(`${__dirname}/node_modules/bootstrap/dist/`));
 app.use('/scripts/bootstrap-icons', express.static(`${__dirname}/node_modules/bootstrap-icons/font/`));
 app.use('/scripts/jquery', express.static(`${__dirname}/node_modules/jquery/dist/`));
+app.use('/scripts', express.static(`${__dirname}/scripts`));
 
 app.use(express.static(`${__dirname}/views`)); // load views
 app.use(express.static(`${__dirname}/views/components`)); // load components

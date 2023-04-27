@@ -200,10 +200,10 @@
             </div>
             <div class="row mt-3">
                 <div class="col">
-                    <button type="button" class="btn btn-dark" style="width: 100%;"><b>Open Door</b></button>
+                    <button type="button" onclick="openDoor()" class="btn btn-dark" style="width: 100%;"><b>Open Door</b></button>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-dark" style="width: 100%;"><b>Close Door</b></button>
+                    <button type="button" onclick="closeDoor()" class="btn btn-dark" style="width: 100%;"><b>Close Door</b></button>
                 </div>
             </div>
         </div>
@@ -313,103 +313,7 @@
             </div>
         </div>
     </div>
-    <script>
-        let manualControlsOn = false;
-        function manualControl() {
-          manualControlsOn = !manualControlsOn;
-          let wPress = false;
-          let aPress = false;
-          let sPress = false;
-          let dPress = false;
-
-          const statusText = document.getElementById('statusText');
-          const statusIcon = document.getElementById('statusCircle');
-          const manualControlButton = document.getElementById('manualControlButton');
-          const deliveryBox = document.getElementById('currentDeliveryBox');
-          const manualBox = document.getElementById('manualControlBox');
-
-          const forwardControl = document.getElementById('forwardControl');
-          const leftControl = document.getElementById('leftControl');
-          const backControl = document.getElementById('backControl');
-          const rightControl = document.getElementById('rightControl');
-
-          if (manualControlsOn) {
-            statusText.innerText = 'MANUAL CONTROLS ON';
-            statusText.style.color = '#ffc107';
-            statusText.style.animation = 'blinker 2s linear infinite';
-            statusIcon.style.visibility = 'hidden';
-            manualControlButton.innerText = 'RELEASE CONTROL';
-            deliveryBox.style.display = 'none';
-            manualBox.style.display = '';
-
-            document.addEventListener('keydown', (event) => {
-              switch (event.key) {
-                case 'w' || 'W':
-                  if (!wPress) {
-                    wPress = true;
-                    forwardControl.style.color = '#0095CB';
-                  }
-                  break;
-                case 'a' || 'A':
-                  if (!aPress) {
-                    aPress = true;
-                    leftControl.style.color = '#0095CB';
-                  }
-                  break;
-                case 's' || 'S':
-                  if (!sPress) {
-                    sPress = true;
-                    backControl.style.color = '#0095CB';
-                  }
-                  break;
-                case 'd' || 'D':
-                  if (!dPress) {
-                    dPress = true;
-                    rightControl.style.color = '#0095CB';
-                  }
-                  break;
-              }
-            });
-            document.addEventListener('keyup', (event) => {
-              switch (event.key) {
-                case 'w' || 'W':
-                  if (wPress) {
-                    wPress = false;
-                    forwardControl.style.color = '';
-                  }
-                  break;
-                case 'a' || 'A':
-                  if (aPress) {
-                    aPress = false;
-                    leftControl.style.color = '';
-                  }
-                  break;
-                case 's' || 'S':
-                  if (sPress) {
-                    sPress = false;
-                    backControl.style.color = '';
-                  }
-                  break;
-                case 'd' || 'D':
-                  if (dPress) {
-                    dPress = false;
-                    rightControl.style.color = '';
-                  }
-                  break;
-              }
-            });
-
-          } else {
-            statusText.innerText = 'Ready';
-            statusText.style.color = '#0f9d3c';
-            statusText.style.animation = '';
-            statusIcon.style.visibility = 'visible';
-            manualControlButton.innerText = 'MANUAL CONTROL';
-            deliveryBox.style.display = '';
-            manualBox.style.display = 'none';
-          }
-        }
-    </script>
+    <script src="/scripts/remoteCommands.js"></script>
 </div>
 </body>
 
