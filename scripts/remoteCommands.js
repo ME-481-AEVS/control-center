@@ -66,13 +66,23 @@ function updatePage() {
 
 function toggleEmergencyStop() {
   if (status !== -1) {
-    // TODO send the command (64)
+    fetch('http://168.105.255.185:5000/command_control', {
+      method: 'POST',
+      body: 64,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     status = -1;
     dataState += 64;
     console.log('Emergency stop engaged');
     updatePage();
   } else {
-    // TODO send the command (0)
+    fetch('http://168.105.255.185:5000/command_control', {
+      method: 'POST',
+      body: 0,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     status = 0;
     dataState -= 64;
     console.log('Emergency stop disengaged');
@@ -144,7 +154,12 @@ function keyDown(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    // TODO send data
+    fetch('http://168.105.255.185:5000/command_control', {
+      method: 'POST',
+      body: dataState,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     console.log(dataState);
     oldDataState = dataState;
   }
@@ -186,7 +201,12 @@ function keyUp(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    // TODO send data
+    fetch('http://168.105.255.185:5000/command_control', {
+      method: 'POST',
+      body: dataState,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     console.log(dataState);
     oldDataState = dataState;
   }
@@ -200,11 +220,23 @@ function manualControl() {
   if (status === 1) {
     // we're in manual control, switch back to normal
     status = 0;
+    fetch('http://168.105.255.185:5000/command_center_switch', {
+      method: 'POST',
+      body: 0,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
     updatePage();
     return;
   }
+  fetch('http://168.105.255.185:5000/command_center_switch', {
+    method: 'POST',
+    body: 1,
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
   status = 1;
   document.addEventListener('keydown', keyDown);
   document.addEventListener('keyup', keyUp);
