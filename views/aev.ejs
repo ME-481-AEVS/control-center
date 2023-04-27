@@ -28,6 +28,24 @@
       }
       .video-embed {
         position: relative;
+        max-width: 100%;
+        max-height: 100%;
+        pointer-events: none;
+      }
+      .front_camera {
+        margin: 0 -50%;
+        object-position: 50% 50%;
+        clip-path: inset(0 0 0 50%);
+        height: 90%;
+        object-fit: contain;
+        scale: 200%;
+        overflow: hidden;
+        z-index: -1;
+      }
+      .other_camera {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
       .small {
         font-size: 10px;
@@ -71,29 +89,32 @@
     <div class="col-lg-9 text-center" >
         <div class="row video-embed" style="height: calc(70vh - 30px)">
             <span class="text-overlay-main">FRONT</span>
-            <img src="http://localhost:5000/video_feed" width="100%" />
+            <img class="front_camera"  style="transform: scaleY(-1);" src="http://168.105.255.185:5000/camera1"/>
         </div>
         <div class="row" style="height: calc(30vh - 32px);">
             <div class="col video-embed">
                 <span class="text-overlay">LEFT</span>
-                <iframe height="100%" width="100%" src="https://www.youtube.com/embed/KJbHcb5ZI_4"></iframe>
             </div>
             <div class="col video-embed">
                 <span class="text-overlay">REAR</span>
-                <iframe height="100%" width="100%" src="https://www.youtube.com/embed/KJbHcb5ZI_4"></iframe>
+                <img class="other_camera" src="http://168.105.255.185:5000/camera0" />
             </div>
             <div class="col video-embed">
                 <span class="text-overlay">RIGHT</span>
-                <iframe height="100%" width="100%" src="https://www.youtube.com/embed/KJbHcb5ZI_4"></iframe>
             </div>
         </div>
     </div>
     <div class="col-lg-3 text-center d-flex flex-column justify-content-between" style="height: 100%">
-        <div id="status-box" class="row mt-3">
-            <div class="col d-flex justify-content-center">
-                <b class="row align-items-center text-center">
-                    <span class="dot me-3"></span>Enroute
-                </b>
+        <div id="status-box" class="row mt-2">
+            <div class="col">
+                <div class="row align-items-center text-center">
+                    <div class="col-2">
+                        <div id="statusCircle" class="dot ms-3 mt-1"></div>
+                    </div>
+                    <div class="col me-5">
+                        <b id="statusText">Enroute</b>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row info-box">
@@ -230,9 +251,9 @@
         </div>
         <div>
             <div class="row">
-                <a href="/manual_control" class="btn btn-warning justify-content-center" type="button">
-                    <span class="mt-2" style="font-weight: 700; font-size: 1.4rem;">MANUAL CONTROL</span>
-                </a>
+                <button class="btn btn-warning justify-content-center" type="button">
+                    <span class="mt-2" onclick="manualControl()" style="font-weight: 700; font-size: 1.4rem;">MANUAL CONTROL</span>
+                </button>
             </div>
             <div class="row">
                 <a href="#" class="btn btn-danger justify-content-center" type="button">
@@ -241,6 +262,18 @@
             </div>
         </div>
     </div>
+    <script>
+        let manualControlsOn = false;
+        function manualControl() {
+          manualControlsOn = !manualControlsOn;
+          console.log(manualControlsOn);
+          if (manualControlsOn) {
+            document.getElementById('statusText').innerText = 'MANUAL CONTROL'
+          } else {
+            document.getElementById('statusText').innerText = 'Enroute'
+          }
+        }
+    </script>
 </div>
 </body>
 
