@@ -82,7 +82,8 @@ function toggleEmergencyStop() {
       body: 0,
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
     status = 0;
     dataState -= 64;
     console.log('Emergency stop disengaged');
@@ -159,7 +160,8 @@ function keyDown(event) {
       body: dataState,
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
     console.log(dataState);
     oldDataState = dataState;
   }
@@ -206,15 +208,21 @@ function keyUp(event) {
       body: dataState,
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
     console.log(dataState);
     oldDataState = dataState;
   }
 }
-
 function manualControl() {
+  const heartbeat = setInterval(() => {
+    console.log('ping');
+    if (status < 1) {
+      clearInterval(heartbeat);
+    }
+  }, 1000);
   if (status === -1) {
-    // we're in emergency stop
+    // we're in emergency stop mode
     return;
   }
   if (status === 1) {
@@ -225,7 +233,8 @@ function manualControl() {
       body: 0,
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
     updatePage();
@@ -236,7 +245,8 @@ function manualControl() {
     body: 1,
   })
     .then((response) => response.json())
-    .then((json) => console.log(json));
+    .then((json) => console.log(json))
+    .catch((err) => console.log(err));
   status = 1;
   document.addEventListener('keydown', keyDown);
   document.addEventListener('keyup', keyUp);
