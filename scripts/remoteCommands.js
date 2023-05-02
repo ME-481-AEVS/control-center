@@ -214,13 +214,8 @@ function keyUp(event) {
     oldDataState = dataState;
   }
 }
+
 function manualControl() {
-  const heartbeat = setInterval(() => {
-    console.log('ping');
-    if (status < 1) {
-      clearInterval(heartbeat);
-    }
-  }, 1000);
   if (status === -1) {
     // we're in emergency stop mode
     return;
@@ -250,5 +245,19 @@ function manualControl() {
   status = 1;
   document.addEventListener('keydown', keyDown);
   document.addEventListener('keyup', keyUp);
+  let heartbeatInt = 0;
+  const heartbeat = setInterval(() => {
+    fetch('http://168.105.255.185:5000/heartbeat', {
+      method: 'POST',
+      body: heartbeatInt,
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+    heartbeatInt++;
+    if (status < 1) {
+      clearInterval(heartbeat);
+    }
+  }, 1000);
   updatePage();
 }
