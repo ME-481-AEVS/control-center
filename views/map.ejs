@@ -250,6 +250,12 @@
   let long = -157.8161;
 
   setInterval(() => {
+    fetch('http://168.105.255.185:5000/telemetry', {
+      method: 'GET',
+    })
+        .then((response) => response.json())
+        .then((json) => console.log(json))
+        .catch((err) => console.log(err));
     lat += 0.00004;
     aevOne.setLatLng([lat, long]);
   }, 2000);
