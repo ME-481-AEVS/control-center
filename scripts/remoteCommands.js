@@ -94,7 +94,13 @@ function toggleEmergencyStop() {
 function openDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      // TODO send the command (32)
+      fetch('http://168.105.255.185:5000/command_control', {
+        method: 'POST',
+        body: 32,
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json))
+        .catch((err) => console.log(err));
       console.log('Opening door');
       doorOpen = true;
     } else {
@@ -108,7 +114,13 @@ function openDoor() {
 function closeDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      // TODO send the command (16)
+      fetch('http://168.105.255.185:5000/command_control', {
+        method: 'POST',
+        body: 16,
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json))
+        .catch((err) => console.log(err));
       console.log('Closing door');
       doorOpen = false;
     } else {

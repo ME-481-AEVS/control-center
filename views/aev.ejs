@@ -93,7 +93,7 @@
     <div class="col-lg-9 text-center" >
         <div class="row video-embed" style="height: calc(70vh - 30px)">
             <span class="text-overlay-main">FRONT</span>
-            <img class="front_camera"  style="transform: scaleY(-1);" src="http://168.105.255.185:5000/camera1"/>
+            <video id="frontCam" class="front_camera" autoplay playsinline muted></video>
         </div>
         <div class="row" style="height: calc(30vh - 32px);">
             <div class="col video-embed">
@@ -101,7 +101,7 @@
             </div>
             <div class="col video-embed">
                 <span class="text-overlay">REAR</span>
-                <video id="rearCam" class="other_camera" autoplay playsinline muted></video>
+                <img class="other_camera" src="http://168.105.255.185:5000/rear"/>
             </div>
             <div class="col video-embed">
                 <span class="text-overlay">RIGHT</span>

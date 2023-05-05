@@ -118,5 +118,5 @@ function playStream(url, videoElement) {
 }
 
 window.onload = () => {
-  playStream('ws://168.105.255.185:8554/back', document.getElementById('rearCam'));
+  playStream('ws://168.105.255.185:8554/front1', document.getElementById('frontCam'));
 };
