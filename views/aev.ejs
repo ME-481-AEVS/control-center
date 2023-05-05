@@ -215,15 +215,15 @@
                         <span>Battery</span>
                     </div>
                     <div class="row">
-                        <b>59%</b>
+                        <b id="batteryPercent">59%</b>
                     </div>
                 </div>
                 <div class="col">
                     <div class="row small">
-                        <span>Motor Power</span>
+                        <span>Door Status</span>
                     </div>
                     <div class="row">
-                        <b>76%</b>
+                        <b id="doorStatus">Closed</b>
                     </div>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                         <span>Speed</span>
                     </div>
                     <div class="row">
-                        <b>55 mph</b>
+                        <b id="speed">0 mph</b>
                     </div>
                 </div>
                 <div class="col">
@@ -241,7 +241,7 @@
                         <span>Accelerometer</span>
                     </div>
                     <div class="row">
-                        <b>1.0, 4.2, 6.9</b>
+                        <b id="accelerometer">0.0, 0.0, 0.0</b>
                     </div>
                 </div>
             </div>
@@ -269,15 +269,15 @@
                         <span>CPU</span>
                     </div>
                     <div class="row">
-                        <b>28°C/82°F</b>
+                        <b>28°C</b>
                     </div>
                 </div>
                 <div class="col">
                     <div class="row small">
-                        <span>Internal</span>
+                        <span>Elec Bay</span>
                     </div>
                     <div class="row">
-                        <b>26°C/79°F</b>
+                        <b id="ebTemp">22°C</b>
                     </div>
                 </div>
             </div>
@@ -314,6 +314,7 @@
         </div>
     </div>
     <script src="/scripts/remoteCommands.js"></script>
+    <script src="/scripts/updateTelem.js"></script>
     <script src="/scripts/webrtc.js"></script>
 </div>
 </body>
