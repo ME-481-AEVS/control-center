@@ -9,7 +9,7 @@ const telemetry = setInterval(() => {
       $('#speed').html(`${json.speed} mph`);
       $('#doorStatus').html(`${json.door === 'c' ? 'Closed' : 'Open' }`);
       $('#accelerometer').html(json.accelerometer);
-      ('#ebTemp').html(`${json.elecBayTemp}°C`);
+      $('#ebTemp').html(`${json.elecBayTemp}°C`);
     })
     .catch((err) => console.log(err));
 }, 2000);
