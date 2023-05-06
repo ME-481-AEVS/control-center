@@ -1,0 +1,68 @@
+<%- include('components/head') %>
+
+<style>
+  .fixed-bottom {
+    height: 60px;
+    background-color: #335c26;
+    color: white;
+  }
+
+  .fixed-bottom a {
+    font-size: 20px;
+    --bs-link-color: white;
+    --bs-link-hover-color: #869b7f;
+  }
+
+  #mainContainer {
+    margin: 0;
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 620;
+  }
+
+  #googleButton {
+    --bs-btn-bg: #f1f1f1;
+    --bs-btn-color: #515151;
+    --bs-btn-hover-bg: #dcdcdc;
+    --bs-btn-hover-color: #515151;
+    --bs-btn-active-color: #515151;
+    border-radius: 1px;
+  }
+
+</style>
+<body style="height: 100%;">
+<div id="mainContainer" class="container m-auto mt-5">
+    <div class="row flex-lg-row-reverse">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-4 pe-4 d-flex justify-content-center" style="pointer-events: none">
+            <img id="aevsLogo" src="/images/aevs-cmd.png" width="400px" alt="AEVS command center logo">
+        </div>
+        <div class="col-lg-6 m-auto">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <h1 class="ms-2 mb-3">AEVS Command Suite</h1>
+                </div>
+            </div>
+            <div id="googleButtonRow" class="row m-auto" style="width: 60%">
+                <a href="/user/login" type="button" class="btn btn-light mt-3 shadow" id="googleButton">
+                    <div class="row">
+                        <div class="col-1" id="googleIconCol">
+                            <img id="googleIcon" src="/images/logo-google.png" alt="Google logo" width="35px" class="my-auto">
+                        </div>
+                        <div class="col m-auto pe-4 me-2">Sign in with Google</div>
+                    </div>
+                </a>
+                <p class="small m-auto mt-3 text-center" style="color: #9f9f9f;">Authorized access only</p>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+</body>

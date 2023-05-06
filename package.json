@@ -2,9 +2,9 @@
   "name": "control-center",
   "version": "1.0.0",
   "description": "AEVS control center",
-  "main": "app.js",
+  "main": "controlCenter.js",
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon controlCenter",
     "lint": "eslint --ext .js .",
     "lint-fix": "eslint --fix --ext .js ."
   },
@@ -28,6 +28,9 @@
     "bootstrap-icons": "^1.10.4",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "jquery": "^3.6.4"
+    "express-session": "^1.17.3",
+    "jquery": "^3.6.4",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0"
   }
 }

@@ -13,3 +13,10 @@
 [data-href] {
   cursor: pointer;
 }
+
+.green-background {
+  color: white;
+  background-color: #335c26;
+  --bs-link-color: #c6c7bf;
+  --bs-link-hover-color: #e9eae1;
+}
