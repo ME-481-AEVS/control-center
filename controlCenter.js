@@ -1,9 +1,14 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
 const mapKey = require('./config/apikey');
 
-const port = process.env.PORT || 3000;
-
 const app = express(); // init app
+
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/uhm-aevs.online/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/uhm-aevs.online/privkey.pem')
+};
 
 app.use('/scripts/bootstrap', express.static(`${__dirname}/node_modules/bootstrap/dist/`));
 app.use('/scripts/bootstrap-icons', express.static(`${__dirname}/node_modules/bootstrap-icons/font/`));
@@ -37,4 +42,6 @@ app.get('/manual_control', (req, res) => {
 });
 
 // start server
-app.listen(port, () => console.log(`Server started on port ${port}.`));
+// http app.listen(3000, () => console.log(`Server started on port 3000.`));
+https.createServer(options, app).listen(3000);
+
