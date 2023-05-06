@@ -1,5 +1,5 @@
 const telemetry = setInterval(() => {
-  fetch('http://168.105.255.185:5000/telemetry', {
+  fetch('https://168.105.255.185/telemetry', {
     method: 'GET',
   })
     .then((response) => response.json())

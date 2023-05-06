@@ -66,7 +66,7 @@ function updatePage() {
 
 function toggleEmergencyStop() {
   if (status !== -1) {
-    fetch('http://168.105.255.185:5000/command_control', {
+    fetch('https://168.105.255.185/command_control', {
       method: 'POST',
       body: 64,
     })
@@ -77,7 +77,7 @@ function toggleEmergencyStop() {
     console.log('Emergency stop engaged');
     updatePage();
   } else {
-    fetch('http://168.105.255.185:5000/command_control', {
+    fetch('https://168.105.255.185/command_control', {
       method: 'POST',
       body: 0,
     })
@@ -94,7 +94,7 @@ function toggleEmergencyStop() {
 function openDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      fetch('http://168.105.255.185:5000/command_control', {
+      fetch('https://168.105.255.185/command_control', {
         method: 'POST',
         body: 32,
       })
@@ -114,7 +114,7 @@ function openDoor() {
 function closeDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      fetch('http://168.105.255.185:5000/command_control', {
+      fetch('https://168.105.255.185/command_control', {
         method: 'POST',
         body: 16,
       })
@@ -167,7 +167,7 @@ function keyDown(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    fetch('http://168.105.255.185:5000/command_control', {
+    fetch('https://168.105.255.185/command_control', {
       method: 'POST',
       body: dataState,
     })
@@ -215,7 +215,7 @@ function keyUp(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    fetch('http://168.105.255.185:5000/command_control', {
+    fetch('https://168.105.255.185/command_control', {
       method: 'POST',
       body: dataState,
     })
@@ -235,7 +235,7 @@ function manualControl() {
   if (status === 1) {
     // we're in manual control, switch back to normal
     status = 0;
-    fetch('http://168.105.255.185:5000/command_center_switch', {
+    fetch('https://168.105.255.185/command_center_switch', {
       method: 'POST',
       body: 0,
     })
@@ -247,7 +247,7 @@ function manualControl() {
     updatePage();
     return;
   }
-  fetch('http://168.105.255.185:5000/command_center_switch', {
+  fetch('https://168.105.255.185/command_center_switch', {
     method: 'POST',
     body: 1,
   })
@@ -259,7 +259,7 @@ function manualControl() {
   document.addEventListener('keyup', keyUp);
   let heartbeatInt = 0;
   const heartbeat = setInterval(() => {
-    fetch('http://168.105.255.185:5000/heartbeat', {
+    fetch('https://168.105.255.185/heartbeat', {
       method: 'POST',
       body: heartbeatInt,
     })
