@@ -62,6 +62,7 @@ app.get(
     res.redirect('/');
   },
 );
+
 // logout
 app.get('/user/logout', (req, res) => {
   req.logout((err) => {
