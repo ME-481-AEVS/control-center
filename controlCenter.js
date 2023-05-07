@@ -62,6 +62,16 @@ app.get(
     res.redirect('/');
   },
 );
+// logout
+app.get('/user/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/sign_in');
+    }
+  });
+});
 
 app.get('/401', (req, res) => {
   res.render('401');
