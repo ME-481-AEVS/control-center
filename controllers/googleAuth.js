@@ -1,6 +1,7 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const clientID = require('../config/googleData').clientId;
 const { clientSecret } = require('../config/googleData');
+const { authUsers } = require('../config/googleData');
 
 module.exports = (passport) => {
   passport.use(new GoogleStrategy({
@@ -9,7 +10,7 @@ module.exports = (passport) => {
     callbackURL: '/user/login/callback',
   }, (accessToken, refreshToken, profile, done) => {
     const googleEmail = profile.emails[0].value;
-    if (googleEmail === 'godfrey7@hawaii.edu' || googleEmail === 'ob3@hawaii.edu') {
+    if (authUsers.includes(googleEmail)) {
       return done(null, { email: googleEmail });
     }
     return done(null);
