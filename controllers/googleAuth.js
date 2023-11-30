@@ -1,8 +1,12 @@
 const fs = require('fs');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const clientID = require('../config/googleData').clientId;
-const { clientSecret } = require('../config/googleData');
-const { authUsers } = require('../config/googleData');
+const dotenv = require('dotenv');
+// const { authUsers } = require('../config/googleData'); list of authorized users
+
+dotenv.config();
+
+const clientID = process.env.GOOGLE_OAUTH_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
 module.exports = (passport) => {
   passport.use(new GoogleStrategy({
@@ -11,23 +15,24 @@ module.exports = (passport) => {
     callbackURL: '/user/login/callback',
   }, (accessToken, refreshToken, profile, done) => {
     const googleEmail = profile.emails[0].value;
-    if (authUsers.includes(googleEmail)) {
-      fs.appendFile(
-        'config/logins.log',
-        `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
-        (err) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Authorized login logged');
-          }
-        },
-      );
-      return done(null, { email: googleEmail });
-    }
+    // if (authUsers.includes(googleEmail)) {
     fs.appendFile(
       'config/logins.log',
-        `${'** UNAUTHORIZED **'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
+      `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
+      (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Authorized login logged');
+        }
+      },
+    );
+    return done(null, { email: googleEmail });
+    /*
+    fs.appendFile(
+      'config/logins.log',
+        `${'** UNAUTHORIZED **'.padEnd(20)}${profile.displayName.padEnd(30)}
+        ${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
       (err) => {
         if (err) {
           console.log(err);
@@ -37,6 +42,7 @@ module.exports = (passport) => {
       },
     );
     return done(null);
+     */
   }));
 
   passport.serializeUser((user, done) => {

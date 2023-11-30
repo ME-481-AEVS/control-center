@@ -4,7 +4,7 @@
   "description": "AEVS control center",
   "main": "controlCenter.js",
   "scripts": {
-    "start": "nodemon controlCenter",
+    "start": "nodemon app",
     "lint": "eslint --ext .js .",
     "lint-fix": "eslint --fix --ext .js ."
   },
@@ -26,6 +26,7 @@
   "dependencies": {
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.4",
+    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.17.3",

@@ -1,11 +1,13 @@
-const fs = require('fs');
-const https = require('https');
+// const https = require('https');
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
-const mapKey = require('./config/apikey');
-
+const dotenv = require('dotenv');
 require('./controllers/googleAuth')(passport);
+
+dotenv.config();
+
+const mapKey = process.env.THUNDERFOREST_API_KEY;
 
 const app = express(); // init app
 
@@ -99,5 +101,5 @@ app.get('/manual_control', ensureAuthenticated, (req, res) => {
 });
 
 // start server
-app.listen(3000, () => console.log('Server started on port 3000.'));
+app.listen(8000, () => console.log('Server started on port 8000.'));
 // https.createServer(options, app).listen(3000);
