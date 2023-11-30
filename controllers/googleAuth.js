@@ -17,7 +17,7 @@ module.exports = (passport) => {
     const googleEmail = profile.emails[0].value;
     // if (authUsers.includes(googleEmail)) {
     fs.appendFile(
-      'config/logins.log',
+      'log/logins.log',
       `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
       (err) => {
         if (err) {
@@ -30,7 +30,7 @@ module.exports = (passport) => {
     return done(null, { email: googleEmail });
     /*
     fs.appendFile(
-      'config/logins.log',
+      'log/logins.log',
         `${'** UNAUTHORIZED **'.padEnd(20)}${profile.displayName.padEnd(30)}
         ${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
       (err) => {
