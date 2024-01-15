@@ -1,25 +1,49 @@
 <%- include('components/head') %>
 <%- include('components/navbar') %>
-
+<style>
+    .status-dot {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        padding-top: 5px;
+    }
+    .green {
+        background-color: #47b44e;
+    }
+    .red {
+        background-color: #e82525;
+    }
+    .grey {
+        background-color: #919191;
+    }
+    .error-row {
+        background-color: #ffb4bd;
+    }
+</style>
 <body>
 <div class="container">
-    <table class="table table-striped text-center mt-4">
+    <table class="table table-striped mt-4">
         <thead class="thead-dark">
-        <tr class="text-center">
+        <tr>
             <th scope="col">AEV</th>
             <th scope="col">Status</th>
             <th scope="col">Start</th>
             <th scope="col">End</th>
             <th scope="col">Placed By</th>
             <th scope="col">Delivering To</th>
-            <th scope="col">Signal / Battery</th>
+            <th scope="col" class="text-center">Signal / Battery</th>
         </tr>
         </thead>
         <tbody >
         <!-- later - init these with loop from aev obj passed with request -->
             <tr style="vertical-align: middle;" class="clickable-row" data-href="/aev">
                 <td>1</td>
-                <td>Enroute</td>
+                <td>
+                    <span class="status-dot green"></span>
+                    Enroute
+                </td>
                 <td>Hamilton</td>
                 <td>Campus Center</td>
                 <td>D. Lassner</td>
@@ -53,9 +77,12 @@
                     </div>
                 </td>
             </tr>
-            <tr style="vertical-align: middle;" class="clickable-row" data-href="/aev">
+            <tr style="vertical-align: middle;" class="clickable-row error-row" data-href="/aev">
                 <td>2</td>
-                <td>Idle</td>
+                <td>
+                    <span class="status-dot red"></span>
+                    <b>ERROR</b>
+                </td>
                 <td>N/A</td>
                 <td>N/A</td>
                 <td>N/A</td>
@@ -91,7 +118,10 @@
             </tr>
             <tr style="vertical-align: middle;" class="clickable-row" data-href="/aev">
                 <td>3</td>
-                <td>Waiting at Destination</td>
+                <td>
+                    <span class="status-dot green"></span>
+                    Waiting at Destination
+                </td>
                 <td>POST</td>
                 <td>Kuykendall</td>
                 <td>M. Scott</td>
@@ -127,7 +157,10 @@
             </tr>
             <tr style="vertical-align: middle;">
                 <td>4</td>
-                <td>Off</td>
+                <td>
+                    <span class="status-dot grey"></span>
+                    Off
+                </td>
                 <td>N/A</td>
                 <td>N/A</td>
                 <td>N/A</td>
