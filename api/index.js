@@ -2,30 +2,30 @@
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
+require('../controllers/googleAuth')(passport);
 const dotenv = require('dotenv');
-require('./controllers/googleAuth')(passport);
 
 dotenv.config();
 
 const mapKey = process.env.THUNDERFOREST_API_KEY;
-
 const app = express(); // init app
 
-/*
-const options = {
-  cert: fs.readFileSync('/etc/letsencrypt/live/uhm-aevs.online/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/uhm-aevs.online/privkey.pem')
-};
-*/
+// access control
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.redirect('/sign_in');
+}
 
-app.use('/scripts/bootstrap', express.static(`${__dirname}/node_modules/bootstrap/dist/`));
-app.use('/scripts/bootstrap-icons', express.static(`${__dirname}/node_modules/bootstrap-icons/font/`));
-app.use('/scripts/jquery', express.static(`${__dirname}/node_modules/jquery/dist/`));
-app.use('/scripts', express.static(`${__dirname}/scripts`));
+app.use('/scripts/bootstrap', express.static(`${__dirname}/../node_modules/bootstrap/dist/`));
+app.use('/scripts/bootstrap-icons', express.static(`${__dirname}/../node_modules/bootstrap-icons/font/`));
+app.use('/scripts/jquery', express.static(`${__dirname}/../node_modules/jquery/dist/`));
+app.use('/scripts', express.static(`${__dirname}/../scripts`));
 
-app.use(express.static(`${__dirname}/views`)); // load views
-app.use(express.static(`${__dirname}/views/components`)); // load components
-app.use(express.static(`${__dirname}/public`)); // define public folder
+app.use(express.static(`${__dirname}/../views`)); // load views
+app.use(express.static(`${__dirname}/../views/components`)); // load components
+app.use(express.static(`${__dirname}/../public`)); // define public folder
 
 // express session
 app.use(session({
@@ -35,21 +35,10 @@ app.use(session({
   cooke: { secure: true },
 }));
 
-// passport config
-require('./controllers/googleAuth')(passport);
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs'); // set view engine to ejs
-
-// access control
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  return res.redirect('/sign_in');
-}
 
 // home route
 app.get('/sign_in', (req, res) => {
@@ -103,3 +92,5 @@ app.get('/manual_control', ensureAuthenticated, (req, res) => {
 // start server
 app.listen(8000, () => console.log('Server started on port 8000.'));
 // https.createServer(options, app).listen(3000);
+
+module.exports = app;

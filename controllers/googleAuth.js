@@ -1,7 +1,7 @@
-const fs = require('fs');
+// const fs = require('fs');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const dotenv = require('dotenv');
-// const { authUsers } = require('../config/googleData'); list of authorized users
+// const { authUsers } = require('../config/googleData'); list of authorized users todo add back
 
 dotenv.config();
 
@@ -16,17 +16,17 @@ module.exports = (passport) => {
   }, (accessToken, refreshToken, profile, done) => {
     const googleEmail = profile.emails[0].value;
     // if (authUsers.includes(googleEmail)) {
-    fs.appendFile(
-      'log/logins.log',
-      `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
-      (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Authorized login logged');
-        }
-      },
-    );
+    // fs.appendFile(
+    //   'log/logins.log',
+    //   `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
+    //   (err) => {
+    //     if (err) {
+    //       console.log(err);
+    //     } else {
+    //       console.log('Authorized login logged');
+    //     }
+    //   },
+    // );
     return done(null, { email: googleEmail });
     /*
     fs.appendFile(
