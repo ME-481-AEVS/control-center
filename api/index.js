@@ -24,12 +24,17 @@ app.use(express.static(`${__dirname}/../views`)); // load views
 app.use(express.static(`${__dirname}/../views/components`)); // load components
 app.use(express.static(`${__dirname}/../public`)); // define public folder
 
+app.set('trust proxy', true);
+
 // express session
 app.use(session({
   secret: 'hehe',
-  resave: true,
+  resave: false,
   saveUninitialized: true,
-  // cookie: { secure: true },
+  cookie: {
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000,
+  },
 }));
 
 const passport = require('passport');
