@@ -1,8 +1,5 @@
-// const https = require('https');
 const express = require('express');
-const passport = require('passport');
 const session = require('express-session');
-require('../controllers/googleAuth')(passport);
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -15,7 +12,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  return res.redirect('/sign_in');
+  return res.redirect('/sign-in');
 }
 
 app.use('/scripts/bootstrap', express.static(`${__dirname}/../node_modules/bootstrap/dist/`));
@@ -32,8 +29,11 @@ app.use(session({
   secret: 'hehe',
   resave: true,
   saveUninitialized: true,
-  cooke: { secure: true },
+  // cookie: { secure: true },
 }));
+
+const passport = require('passport');
+require('../controllers/googleAuth')(passport);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,8 +41,8 @@ app.use(passport.session());
 app.set('view engine', 'ejs'); // set view engine to ejs
 
 // home route
-app.get('/sign_in', (req, res) => {
-  res.render('sign_in');
+app.get('/sign-in', (req, res) => {
+  res.render('sign-in');
 });
 
 app.get('/user/login', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -60,7 +60,7 @@ app.get('/user/logout', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect('/sign_in');
+      res.redirect('/sign-in');
     }
   });
 });
@@ -84,13 +84,7 @@ app.get('/aev', ensureAuthenticated, (req, res) => {
   res.render('aev');
 });
 
-// manual control route
-app.get('/manual_control', ensureAuthenticated, (req, res) => {
-  res.render('manual_control');
-});
-
 // start server
 app.listen(8000, () => console.log('Server started on port 8000.'));
-// https.createServer(options, app).listen(3000);
 
 module.exports = app;
