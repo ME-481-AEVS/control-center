@@ -2,10 +2,10 @@
   "name": "control-center",
   "version": "1.0.0",
   "description": "AEVS control center",
-  "main": "api/index.js",
+  "main": "api/wss.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon wss",
     "lint": "eslint --ext .js .",
     "lint-fix": "eslint --fix --ext .js ."
   },
