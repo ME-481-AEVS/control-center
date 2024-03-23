@@ -1,11 +1,11 @@
-const express = require('express');
-const session = require('express-session');
-const dotenv = require('dotenv');
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
+import url from 'url';
+import googleAuth from '../controllers/googleAuth.js';
 
-dotenv.config();
-
-const mapKey = process.env.THUNDERFOREST_API_KEY;
 const app = express(); // init app
+app.use(express.json());
 
 // access control
 function ensureAuthenticated(req, res, next) {
@@ -15,20 +15,20 @@ function ensureAuthenticated(req, res, next) {
   return res.redirect('/sign-in');
 }
 
-app.use('/scripts/bootstrap', express.static(`${__dirname}/../node_modules/bootstrap/dist/`));
-app.use('/scripts/bootstrap-icons', express.static(`${__dirname}/../node_modules/bootstrap-icons/font/`));
-app.use('/scripts/jquery', express.static(`${__dirname}/../node_modules/jquery/dist/`));
-app.use('/scripts', express.static(`${__dirname}/../scripts`));
+app.use('/scripts/bootstrap', express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../node_modules/bootstrap/dist/`));
+app.use('/scripts/bootstrap-icons', express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../node_modules/bootstrap-icons/font/`));
+app.use('/scripts/jquery', express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../node_modules/jquery/dist/`));
+app.use('/scripts', express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../scripts`));
 
-app.use(express.static(`${__dirname}/../views`)); // load views
-app.use(express.static(`${__dirname}/../views/components`)); // load components
-app.use(express.static(`${__dirname}/../public`)); // define public folder
+app.use(express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../views`)); // load views
+app.use(express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../views/components`)); // load components
+app.use(express.static(`${url.fileURLToPath(new URL('.', import.meta.url))}/../public`)); // define public folder
 
 app.set('trust proxy', true);
 
 // express session
 app.use(session({
-  secret: 'hehe',
+  secret: process.env.APP_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -37,9 +37,7 @@ app.use(session({
   },
 }));
 
-const passport = require('passport');
-require('../controllers/googleAuth')(passport);
-
+googleAuth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -81,7 +79,7 @@ app.get('/', ensureAuthenticated, (req, res) => {
 
 // map route
 app.get('/map', ensureAuthenticated, (req, res) => {
-  res.render('map', { mapKey });
+  res.render('map', { mapKey: process.env.THUNDERFOREST_API_KEY });
 });
 
 // aev cameras/info route
@@ -92,4 +90,4 @@ app.get('/aev', ensureAuthenticated, (req, res) => {
 // start server
 app.listen(8000, () => console.log('Server started on port 8000.'));
 
-module.exports = app;
+export default app;
