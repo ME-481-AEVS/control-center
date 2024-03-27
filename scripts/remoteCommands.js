@@ -1,5 +1,7 @@
 let status = 0; // 0 = normal, 1 = manual control, -1 = emergency stop
-let doorOpen = false; // todo get this from robot
+let doorOpen = false;
+let controlSocketConnected;
+let controlSocket;
 
 /* Data encoded as a number, each bit represents a command:
       0000 0000
@@ -65,25 +67,19 @@ function updatePage() {
 }
 
 function toggleEmergencyStop() {
+  // todo send command even if manual control is off
   if (status !== -1) {
-    fetch('https://168.105.255.185/command_control', {
-      method: 'POST',
-      body: 64,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+    if (controlSocketConnected) {
+      controlSocketConnected = false;
+      controlSocket.close();
+      telemSocketConnected = true;
+      telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
+    }
     status = -1;
     dataState += 64;
     console.log('Emergency stop engaged');
     updatePage();
   } else {
-    fetch('https://168.105.255.185/command_control', {
-      method: 'POST',
-      body: 0,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
     status = 0;
     dataState -= 64;
     console.log('Emergency stop disengaged');
@@ -94,13 +90,10 @@ function toggleEmergencyStop() {
 function openDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      fetch('https://168.105.255.185/command_control', {
-        method: 'POST',
-        body: 32,
-      })
-        .then((response) => response.json())
-        .then((json) => console.log(json))
-        .catch((err) => console.log(err));
+      controlSocket.send(JSON.stringify({
+        type: 'command',
+        message: 16,
+      }));
       console.log('Opening door');
       doorOpen = true;
     } else {
@@ -114,13 +107,10 @@ function openDoor() {
 function closeDoor() {
   if (status === 1) {
     if (dataState === 0) {
-      fetch('https://168.105.255.185/command_control', {
-        method: 'POST',
-        body: 16,
-      })
-        .then((response) => response.json())
-        .then((json) => console.log(json))
-        .catch((err) => console.log(err));
+      controlSocket.send(JSON.stringify({
+        type: 'command',
+        message: 32,
+      }));
       console.log('Closing door');
       doorOpen = false;
     } else {
@@ -167,13 +157,10 @@ function keyDown(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    fetch('https://168.105.255.185/command_control', {
-      method: 'POST',
-      body: dataState,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+    controlSocket.send(JSON.stringify({
+      type: 'command',
+      message: dataState,
+    }));
     console.log(dataState);
     oldDataState = dataState;
   }
@@ -215,13 +202,10 @@ function keyUp(event) {
   }
   // send data if changed
   if (dataState !== oldDataState) {
-    fetch('https://168.105.255.185/command_control', {
-      method: 'POST',
-      body: dataState,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+    controlSocket.send(JSON.stringify({
+      type: 'command',
+      message: dataState,
+    }));
     console.log(dataState);
     oldDataState = dataState;
   }
@@ -235,41 +219,49 @@ function manualControl() {
   if (status === 1) {
     // we're in manual control, switch back to normal
     status = 0;
-    fetch('https://168.105.255.185/command_center_switch', {
-      method: 'POST',
-      body: 0,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+    controlSocket.send(JSON.stringify({
+      type: 'status',
+      message: 'Manual control off',
+    }));
+    controlSocketConnected = false;
+    controlSocket.close();
     document.removeEventListener('keydown', keyDown);
     document.removeEventListener('keyup', keyUp);
     updatePage();
     return;
   }
-  fetch('https://168.105.255.185/command_center_switch', {
-    method: 'POST',
-    body: 1,
+  controlSocket = new WebSocket(`ws://168.105.240.9/control`);
+  controlSocket.addEventListener('open', () => {
+    console.log('WS connection established');
+    controlSocketConnected = true;
+    controlSocket.send(JSON.stringify({
+      type: 'status',
+      message: 'Manual control on',
+    }));
+    telemSocketConnected = false;
+    telemSocket.close();
   })
-    .then((response) => response.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.log(err));
+
+  controlSocket.addEventListener('message', ({ data }) => {
+    console.log(data);
+  });
+
+  controlSocket.addEventListener('error', (err) => {
+    console.log(err);
+  });
+
+  controlSocket.addEventListener('close', () => {
+    console.log('Controls websocket disconnected');
+    controlSocketConnected = false;
+    controlSocket.close();
+    if (!telemSocketConnected) {
+      telemSocketConnected = true;
+      telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
+    }
+  });
+
   status = 1;
   document.addEventListener('keydown', keyDown);
   document.addEventListener('keyup', keyUp);
-  let heartbeatInt = 0;
-  const heartbeat = setInterval(() => {
-    fetch('https://168.105.255.185/heartbeat', {
-      method: 'POST',
-      body: heartbeatInt,
-    })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
-    heartbeatInt++;
-    if (status < 1) {
-      clearInterval(heartbeat);
-    }
-  }, 1000);
   updatePage();
 }

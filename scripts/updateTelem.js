@@ -1,30 +1,29 @@
-let socketConnected;
-
-const socket = new WebSocket(`ws://localhost:5000/telemetry`);
+let telemSocketConnected;
+let telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
 
 function send(message) {
-  socket.send(JSON.stringify(message));
+  telemSocket.send(JSON.stringify(message));
 }
 
-socket.addEventListener('open', () => {
+telemSocket.addEventListener('open', () => {
   console.log('WS connection established');
-  socketConnected = true;
-  socket.send(JSON.stringify({
+  telemSocketConnected = true;
+  telemSocket.send(JSON.stringify({
     type: 'status',
     message: 'Confirmed connection',
   }));
 })
 
-socket.addEventListener('message', ({ data }) => {
+telemSocket.addEventListener('message', ({ data }) => {
   console.log(data);
 });
 
-socket.addEventListener('error', (err) => {
+telemSocket.addEventListener('error', (err) => {
   console.log(err);
 });
 
-socket.addEventListener('close', () => {
-  console.log('WS disconnected');
-  socketConnected = false;
-  socket.close();
+telemSocket.addEventListener('close', () => {
+  console.log('Telemetry socket disconnected');
+  telemSocketConnected = false;
+  telemSocket.close();
 });
