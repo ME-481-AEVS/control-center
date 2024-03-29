@@ -1,10 +1,18 @@
+import fs from 'fs';
+import https from 'https';
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import url from 'url';
 import googleAuth from '../controllers/googleAuth.js';
 
+const options = {
+  cert: fs.readFileSync(process.env.CERT_PATH),
+  key: fs.readFileSync(process.env.KEY_PATH),
+};
+
 const app = express(); // init app
+
 app.use(express.json());
 
 // access control
@@ -88,6 +96,7 @@ app.get('/aev', ensureAuthenticated, (req, res) => {
 });
 
 // start server
-app.listen(8000, () => console.log('Server started on port 8000.'));
+// app.listen(80, () => console.log('Server started on port 80.'));
+https.createServer(options, app).listen(443);
 
 export default app;
