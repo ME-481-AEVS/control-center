@@ -1,5 +1,7 @@
+<!doctype html>
+<html lang="en">
+<head>
 <%- include('components/head') %>
-<%- include('components/navbar') %>
 <style>
     .status-dot {
         height: 15px;
@@ -22,7 +24,9 @@
         background-color: #ffb4bd;
     }
 </style>
+</head>
 <body>
+<%- include('components/navbar') %>
 <div class="container">
     <table class="table table-striped mt-4">
         <thead class="thead-dark">
@@ -197,7 +201,6 @@
         </tbody>
     </table>
 </div>
-</body>
 <script>
   jQuery(document).ready(function($) {
     $(".clickable-row").click(function() {
@@ -205,3 +208,5 @@
     });
   });
 </script>
+</body>
+</html>
