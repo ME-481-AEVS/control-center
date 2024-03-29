@@ -73,7 +73,7 @@ function toggleEmergencyStop() {
       controlSocketConnected = false;
       controlSocket.close();
       telemSocketConnected = true;
-      telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
+      telemSocket = new WebSocket('wss://168.105.240.9/telemetry');
     }
     status = -1;
     dataState += 64;
@@ -230,7 +230,7 @@ function manualControl() {
     updatePage();
     return;
   }
-  controlSocket = new WebSocket(`ws://168.105.240.9/control`);
+  controlSocket = new WebSocket(`wss://168.105.240.9/control`);
   controlSocket.addEventListener('open', () => {
     console.log('WS connection established');
     controlSocketConnected = true;
@@ -256,7 +256,7 @@ function manualControl() {
     controlSocket.close();
     if (!telemSocketConnected) {
       telemSocketConnected = true;
-      telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
+      telemSocket = new WebSocket('wss://168.105.240.9/telemetry');
     }
   });
 
