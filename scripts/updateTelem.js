@@ -1,5 +1,5 @@
 let telemSocketConnected;
-let telemSocket = new WebSocket('ws://168.105.240.9/telemetry');
+let telemSocket = new WebSocket('wss://168.105.240.9/telemetry');
 
 function send(message) {
   telemSocket.send(JSON.stringify(message));
