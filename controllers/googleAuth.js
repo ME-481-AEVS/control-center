@@ -9,25 +9,29 @@ const clientID = process.env.GOOGLE_OAUTH_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
 const googleAuth = (passport) => {
-  passport.use(new GoogleStrategy({
-    clientID,
-    clientSecret,
-    callbackURL: '/user/login/callback',
-  }, (accessToken, refreshToken, profile, done) => {
-    const googleEmail = profile.emails[0].value;
-    // if (authUsers.includes(googleEmail)) {
-    // fs.appendFile(
-    //   'log/logins.log',
-    //   `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
-    //   (err) => {
-    //     if (err) {
-    //       console.log(err);
-    //     } else {
-    //       console.log('Authorized login logged');
-    //     }
-    //   },
-    // );
-    return done(null, { email: googleEmail });
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID,
+        clientSecret,
+        callbackURL: '/user/login/callback',
+      },
+      (accessToken, refreshToken, profile, done) => {
+        const googleEmail = profile.emails[0].value;
+        // if (authUsers.includes(googleEmail)) {
+        // fs.appendFile(
+        //   'log/logins.log',
+        //   `${'Authorized'.padEnd(20)}${profile.displayName.padEnd(30)}${googleEmail.padEnd(30)}${new Date(Date.now()).toISOString().padEnd(20)}\n`,
+        //   (err) => {
+        //     if (err) {
+        //       console.log(err);
+        //     } else {
+        //       console.log('Authorized login logged');
+        //     }
+        //   },
+        // );
+        console.log('logged in');
+        return done(null, { email: googleEmail });
     /*
     fs.appendFile(
       'log/logins.log',
